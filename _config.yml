@@ -1,0 +1,29 @@
+# SITE SETTINGS
+title: Camtrap DP registry
+
+# SOCIAL PROFILES
+
+# THEME SETTINGS
+theme: minima # Fallback theme
+remote_theme: peterdesmet/petridish@3.1
+repository: camera-traps/camtrap-dp-registry
+posts_on_home: false
+github_edit: true
+colors:
+  links: "#70a699"
+  banner: "#8ba98f"
+  footer: "#8ba98f"
+font_serif: true
+
+# BUILD SETTINGS
+markdown: kramdown
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+
+# FRONTMATTER DEFAULTS
