@@ -27,3 +27,10 @@ exclude:
   - LICENSE
 
 # FRONTMATTER DEFAULTS
+defaults:
+  - scope:
+      path: pages/datasets
+    values:
+      title: Dataset
+      toc: true
+      permalink: /datasets/:basename/
