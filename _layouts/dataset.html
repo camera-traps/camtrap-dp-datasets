@@ -1,0 +1,135 @@
+---
+layout: default
+---
+
+{{ content }}
+
+{% assign dataset_name = page.name | remove: '.md' %}
+{% assign dataset = site.data[dataset_name].datapackage %}
+
+<h2 id="description">Dataset info</h2>
+<strong>{{ dataset.title }}</strong>
+<p>{{ dataset.description | markdownify }}</p>
+
+<h2 id="project">Project info</h2>
+
+{% assign project = dataset.project %}
+
+<strong>{{ project.title }}{% if project.acronym %} <code>{{ project.acronym }}</code>{% endif %}</strong>
+
+<p>{{ project.description | markdownify }}</p>
+
+<ul>
+  <li>Sampling design: <code>{{ project.samplingDesign }}</code></li>
+  <li>Capture method: <code>{{ project.captureMethod | join: ", " }}</code></li>
+  <li>Observation level: <code>{{ project.observationLevel | join: ", " }}</code></li>
+  <li>Individual animals: <code>{{ project.individualAnimals }}</code></li>
+</ul>
+
+<h2 id="contributors">Contributors</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th>Email*</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for contributor in dataset.contributors %}
+    <tr>
+      <td>
+        {% if contributor.firstName %}
+          {{ contributor.firstName }} {{ contributor.lastName }}
+        {% else %}
+          {{ contributor.title }}
+        {% endif %}
+      </td>
+      <td>{{ contributor.role }}</td>
+      <td>
+        {% if contributor.role == "principalInvestigator" or contributor.role == "contact" %}
+          <a href="mailto:{{ contributor.email }}">{{ contributor.email }}</a>
+        {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<small class="text-muted">* For PIs and contacts only</small>
+
+<h2 id="sources">Sources</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Version</th>
+      <th>Website</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for source in dataset.sources %}
+    <tr>
+      <td>{{ source.title }}</td>
+      <td>{{ source.version }}</td>
+      <td><a href="{{ source.path }}">{{ source.path }}</a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2 id="licenses">Licenses</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Scope</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for license in dataset.licenses %}
+    <tr>
+      <td>{{ license.name }}</td>
+      <td>{{ license.scope }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2 id="temporal">Temporal</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ dataset.temporal.start }}</td>
+      <td>{{ dataset.temporal.end }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="taxa">Taxa</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Scientific name</th>
+      <th>Rank</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for taxon in dataset.taxonomic %}
+    <tr>
+      <td>{{ taxon.scientificName }}</td>
+      <td>{{ taxon.taxonRank }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<h2 id="keywords">Keywords</h2>
+
+{{ dataset.keywords | join: ", " }}
